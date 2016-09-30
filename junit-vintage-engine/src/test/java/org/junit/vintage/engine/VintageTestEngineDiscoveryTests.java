@@ -40,6 +40,7 @@ import java.util.Set;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
+import org.junit.platform.commons.util.StringUtils;
 import org.junit.platform.engine.TestDescriptor;
 import org.junit.platform.engine.TestTag;
 import org.junit.platform.engine.UniqueId;
@@ -677,7 +678,8 @@ class VintageTestEngineDiscoveryTests {
 		assertThat(testDescriptor.getSource()).containsInstanceOf(JavaMethodSource.class);
 		JavaMethodSource methodSource = (JavaMethodSource) testDescriptor.getSource().get();
 		assertThat(methodSource.getMethodName()).isEqualTo(expectedMethod.getName());
-		assertThat(methodSource.getMethodParameterTypes()).containsExactly(expectedMethod.getParameterTypes());
+		assertThat(methodSource.getMethodParameterTypes()).isEqualTo(
+			StringUtils.nullSafeToString(expectedMethod.getParameterTypes()));
 	}
 
 	private static LauncherDiscoveryRequest discoveryRequestForClass(Class<?> testClass) {
